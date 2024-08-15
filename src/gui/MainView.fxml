@@ -12,7 +12,7 @@
          <children>
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="Registro">
+                <Menu mnemonicParsing="false" text="Registrar">
                   <items>
                     <MenuItem fx:id="menuItemSeller" mnemonicParsing="false" onAction="#onMenuItemSellerAction" text="Vendedores" />
                         <MenuItem fx:id="menuItemDepartment" mnemonicParsing="false" onAction="#onMenuItemDepartmentAction" text="Departamento" />
