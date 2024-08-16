@@ -1,9 +1,13 @@
 package gui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import db.DbException;
+import gui.listener.DataChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +26,8 @@ public class DepartmentFormController implements Initializable{
 	private Department entity;
 	
 	private DepartmentService service;
+	
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
 	@FXML
 	private TextField textId;
@@ -50,12 +56,20 @@ public class DepartmentFormController implements Initializable{
 			entity = getFormData();
 			service.saveOrUpdate(entity);
 			
+			notifyDataChangeListeners();
+			
 			Utils.currentStage(event).close();
 		} catch (DbException e) {
 			Alerts.showAlert("Erro ao salvar objeto!", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
+	private void notifyDataChangeListeners() {
+		for(DataChangeListener listener : dataChangeListeners) {
+			listener.onDataChanged();
+		}
+	}
+
 	private Department getFormData() {
 		Department department = new Department();
 		department.setId(util.Utils.tryParseToInt(textId.getText()));
@@ -87,6 +101,10 @@ public class DepartmentFormController implements Initializable{
 		}
 		textId.setText(String.valueOf(entity.getId()));
 		textName.setText(entity.getName());
+	}
+	
+	public void subscribeDataChangeListener(DataChangeListener data) {
+		dataChangeListeners.add(data);
 	}
 	
 	private void initializeNodes() {
