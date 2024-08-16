@@ -38,7 +38,17 @@
             <Label text="Nome" GridPane.rowIndex="1" />
             <TextField fx:id="textId" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="textName" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="labelErrorNameLabel" textFill="#ea0303" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="textEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="labelErrorNameLabel" textFill="#ea0303" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding></Label>
+            <DatePicker fx:id="dpBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="textBaseSalary" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxDepartment" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#onButtonSaveAction" text="Salvar" />
@@ -49,9 +59,6 @@
             <Label text="Aniversário" GridPane.rowIndex="3" />
             <Label text="Base Salarial" GridPane.rowIndex="4" />
             <Label text="Departamento" GridPane.rowIndex="5" />
-            <TextField fx:id="textEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="textBaseSalary" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DatePicker fx:id="dpBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="labelErrorEmail" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <padding>
                   <Insets left="20.0" />
@@ -67,7 +74,6 @@
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <ComboBox fx:id="comboBoxDepartment" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>
