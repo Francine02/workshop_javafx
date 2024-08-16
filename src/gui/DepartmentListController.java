@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 import util.Alerts;
+import util.Utils;
 
 public class DepartmentListController implements Initializable{
 	
@@ -84,6 +85,7 @@ public class DepartmentListController implements Initializable{
 			DepartmentFormController controller = loader.getController();
 			controller.setDepartment(department);
 			controller.updateFromData();
+			controller.setDepartmentService(new DepartmentService());
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Entre com os dados:");
