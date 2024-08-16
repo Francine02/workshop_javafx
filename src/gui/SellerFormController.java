@@ -1,6 +1,8 @@
 package gui;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Seller;
@@ -36,9 +39,27 @@ public class SellerFormController implements Initializable{
 	
 	@FXML
 	private TextField textName;
+	
+	@FXML
+	private TextField textEmail;
+	
+	@FXML
+	private DatePicker dpBirthDate;
+	
+	@FXML
+	private TextField textBaseSalary;
 
 	@FXML
 	private Label labelErrorNameLabel;
+	
+	@FXML
+	private Label labelErrorEmail;
+	
+	@FXML
+	private Label labelErrorBirthDate;
+	
+	@FXML
+	private Label labelErrorBaseSalary;
 	
 	@FXML
 	private Button buttonSave;
@@ -116,6 +137,12 @@ public class SellerFormController implements Initializable{
 		}
 		textId.setText(String.valueOf(entity.getId()));
 		textName.setText(entity.getName());
+		textEmail.setText(entity.getEmail());
+		textBaseSalary.setText(String.format("%.2f", entity.getBaseSalary()));
+		
+		if (entity.getBirthDate() != null) {
+			dpBirthDate.setValue(LocalDate.ofInstant(entity.getBirthDate().toInstant(), ZoneId.systemDefault()));
+		}
 	}
 	
 	public void subscribeDataChangeListener(DataChangeListener data) {
@@ -125,6 +152,9 @@ public class SellerFormController implements Initializable{
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(textId);
 		Constraints.setTextFieldMaxLength(textName, 35);
+		Constraints.setTextFieldDouble(textBaseSalary);
+		Constraints.setTextFieldMaxLength(textEmail, 70);
+		Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
 	}
 
 	private void setErrorMessages(Map<String, String> error) {
