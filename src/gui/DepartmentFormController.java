@@ -2,9 +2,10 @@ package gui;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listener.DataChangeListener;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Department;
+import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 import util.Alerts;
 import util.Constraints;
@@ -61,6 +63,8 @@ public class DepartmentFormController implements Initializable{
 			Utils.currentStage(event).close();
 		} catch (DbException e) {
 			Alerts.showAlert("Erro ao salvar objeto!", null, e.getMessage(), AlertType.ERROR);
+		} catch (ValidationException e) {
+			setErrorMessages(e.getErrors());
 		}
 	}
 	
@@ -72,8 +76,19 @@ public class DepartmentFormController implements Initializable{
 
 	private Department getFormData() {
 		Department department = new Department();
+		
+		ValidationException exception = new ValidationException("Erro de validação");
+		
 		department.setId(util.Utils.tryParseToInt(textId.getText()));
+		
+		if(textName.getText() == null || textName.getText().trim().equals("")) {
+			exception.addError("Nome", "O campo não pode ser vazio!!");
+		}
 		department.setName(textName.getText());
+		
+		if (exception.getErrors().size() > 0) {
+			throw exception;
+		}
 		return department;
 	}
 
@@ -112,4 +127,11 @@ public class DepartmentFormController implements Initializable{
 		Constraints.setTextFieldMaxLength(textName, 35);
 	}
 
+	private void setErrorMessages(Map<String, String> error) {
+		Set<String> fieldSet = error.keySet();
+		
+		if (fieldSet.contains("Nome")) {
+			labelErrorNameLabel.setText(error.get("Nome"));
+		}
+	}
 }
